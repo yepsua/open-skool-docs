@@ -1,0 +1,10 @@
+'''Utopia'''
+
+Documentación técnica para la instalación y el manejo del Sistema de Control de Estudios Utopia.
+
+= Introducción =
+= Arquitectura =
+== Servicios Rest ==
+== PHP 5.3 ==
+== Sf2 ==
+= Modelo de Datos =

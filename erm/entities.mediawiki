@@ -1,0 +1,436 @@
+'''Entidades'''
+
+= Institución =
+Institución o Escuela es el nombre genérico de cualquier centro docente, centro de enseñanza, centro educativo, colegio, institución educativa o centro de participación; es decir, toda institución que imparta educación o enseñanza.
+
+{|
+!Atributo               !!Tipo             !! Req !! Comentario
+|-
+|id (PK)                ||Numeric          ||  S  || Clave Primaria
+|-
+|codigo                 ||String(10)       ||  S  || Codigo de identificacion
+|-
+|nombre                 ||String(255)      ||  S  || Nombre de la Institucion
+|-
+|descripcion            ||String(255)      ||  N  || Descripcion referida al Instituto
+|-
+|direccion              ||String(255)      ||  N  || Direccion de la Instirucion
+|}
+
+= Titulo =
+Representan los titulos que otorga una institucion
+
+{|
+!Atributo               !!Tipo             !! Req !! Comentario
+|-
+|id (PK)                ||Numeric          ||  S  || Clave Primaria
+|-
+|codigo                 ||String(10)       ||  S  || Codigo de identificacion
+|-
+|nombre                 ||String(255)      ||  S  || Nombre del Titulo
+|-
+|abreviatura            ||String(35)       ||  S  || Abreviatura del Titulo por ejemplo Para "Licenciado" => "Lic."
+|}
+
+= Mención =
+Repesenta el reconocimiento especifico del Titulo. Por ejemplo en la relacion "Administracion - Mercadeo" Administracion es el Titulo y la Mencion es Mercadeo.
+
+{|
+!Atributo               !!Tipo             !! Req !! Comentario
+|-
+|id (PK)                ||Numeric          ||  S  || Clave Primaria
+|-
+|codigo                 ||String(10)       ||  S  || Codigo de identificacion
+|-
+|nombre                 ||String(255)      ||  S  || Nombre de la Mencion
+|-
+|abreviatura            ||String(35)       ||  S  || Abreviatura de la Mencion por ejemplo Para "Ciencias" => "Cª"
+|}
+
+= Carrera =
+Conjunto de cursos académicos que una persona debe completar para poder obtener un título o diploma con una mencion.
+Relacion las entidades Titulo y Carrera. Por ejemplo "Licenciado - Mercadeo"
+
+{|
+!Atributo               !!Tipo             !! Req !! Comentario
+|-
+|id (PK)                ||Numeric          ||  S  || Clave Primaria
+|-
+|codigo                 ||String(10)       ||  N  || Codigo de identificacion
+|-
+|titulo_id (FK)         ||Numeric          ||  S  || Relacion con Titulo
+|-
+|mencion_id (FK)        ||Numeric          ||  S  || Relacion con Mencion
+|}
+
+= Facultad =
+Una facultad es una institución docente donde se imparten estudios superiores especializados en alguna materia o rama del saber (Medicina, Derecho, Física, etc); generalmente constituyen una subdivisión de una universidad. Tambien se conoce con el termino de Escuela. Por ejemplo el Intituto UCV tiene la Escuela de Medicina o Escuela de Contadores.
+
+{|
+!Atributo               !!Tipo             !! Req !! Comentario
+|-
+|id (PK)                ||Numeric          ||  S  || Clave Primaria
+|-
+|codigo                 ||String(10)       ||  S  || Codigo de Identificacion
+|-
+|nombre                 ||String(255)      ||  S  || Nombre de la Facultad o Escuela
+|-
+|carrera_id (FK)        ||Numeric          ||  S  || Relacion con Carrera
+|-
+|instituo_id (FK)       ||String           ||  S  || Relacion con Instituto
+|}
+
+= Asignatura =
+Las asignaturas (del latín assignatus) son las materias que forman una carrera o un plan de estudios, y que se dictan en los centros educativos. Algunos ejemplos de asignaturas son la literatura, la biología y la química.
+
+{|
+!Atributo                   !!Tipo             !! Req !! Comentario
+|-
+|id (PK)                    ||Numeric          ||  S  || Clave Primaria
+|-
+|codigo                     ||String(10)       ||  N  || Codigo de identificacion
+|-
+|nombre                     ||Strin(255)       ||  S  || Nombre de la Asignatura
+|-
+|asignatura_padre_id (RK)   ||Strin(255)       ||  N  || Asignatura padre Clave Recursiva
+|}
+
+= Pensun - Curriculu =
+Es una descripción de algunos de los requerimientos que se necesitan satisfacer para obtener un grado universitario en un área del saber.
+
+{|
+!Atributo               !!Tipo             !! Req !! Comentario
+|-
+|id (PK)                ||Numeric          ||  S  || Clave Primaria
+|-
+|carrera_id (FK)        ||Numeric          ||  N  || Relacion con Carrera
+|-
+|pensun_padre_id (FK)   ||Numeric          ||  N  || Herencia de Pensun 
+|-
+|}
+
+= Asignatura Pensun =
+Es una descripción de algunos de los requerimientos que se necesitan satisfacer para obtener un grado universitario en un área del saber.
+
+{|
+!Atributo                     !!Tipo             !! Req !! Comentario
+|-
+|id (PK)                          ||Numeric          ||  S  || Clave Primaria
+|-
+|pensun_id (FK)                   ||Numeric          ||  N  || Relacion con Pensun
+|-
+|asignatura_id (FK)               ||Numeric          ||  S  || Relacion con Asignatura
+|-
+|codigo                           ||Strin(10)        ||  S  || Codigo la Asginatura
+|-
+|codigo_curricular                ||Strin(10)        ||  S  || Codigo Curricular de la Asginatura
+|-
+|electiva                         ||Boolean(False)   ||  S  || Indicador si la asignatura es electiva
+|-
+|unidades_credito                 ||Numeric          ||  S  || Cantidad de creditos para esta Asignatura
+|-
+|tipo_unidad_curricular_id (FK)   ||Numeric          ||  S  || Tipo Unidad Curricular - Relacion con LOV('unidad_curricular')
+|-
+|horas_teoricas                   ||Numeric          ||  S  || Horas Teoricas (Semanales)
+|-
+|horas_practicas                  ||Numeric          ||  S  || Horas Practicas (Semanales)
+|}
+
+= Prelacion =
+Prelación es un término que procede del vocablo latino praelatio y que hace referencia a la prioridad o predilección con que se tiene que atender un determinado asunto frente a otro con el que se establece una comparación. En el ecosistema educativo la prelacion se refiere a las asignaturas que deben ser aprobadas para poder cursar otra Asignatura. Por ejemplo Matematica I es la prelacion de Matematica II.
+
+{|
+!Atributo                     !!Tipo             !! Req !! Comentario
+|-
+|id (PK)                      ||Numeric          ||  S  || Clave Primaria
+|-
+|codigo                       ||String(10)       ||  N  || Relacion con Pensun
+|-
+|asignatura_pensun_id (FK)    ||Strin(255)       ||  S  || Relacion con Asignatura Pensun (Asignatura prelada)
+|-
+|prelacion_asignatura_id (FK) ||Strin(255)       ||  S  || Relacion con Asignatura (Asignatura que Prela)
+|}
+
+= Plan de Estudios =
+Diseño curricular que se aplica a determinadas enseñanzas impartidas por un centro de estudios.
+
+{|
+!Atributo               !!Tipo             !! Req !! Comentario
+|-
+|id (PK)                ||Numeric          ||  S  || Clave Primaria
+|-
+|pensun_id (FK)         ||Numeric          ||  N  || Relacion con Carrera
+|-
+|codigo                 ||String(10)       ||  S  || Codigo que identifica el Plan de Estudio
+|-
+|observacion            ||String(255)      ||  S  || Observacion sobre el Plan de Estudio
+|}
+
+= Etapa Plan Estudios =
+Identifican las distintas etapas en la que se divide un Plan de Estudio. Por ejmplo: 1er, 2do, 3er Semeste. 
+
+{|
+!Atributo                                !!Tipo             !! Req !! Comentario
+|-
+|id (PK)                                 ||Numeric          ||  S  || Clave Primaria
+|-
+|plan_id (FK)                            ||Numeric          ||  S  || Relacion con Plan Estudio
+|-
+|periodo_id (FK                          ||Numeric          ||  S  || Relacion con Periodo
+|-
+|ordenamiento                        	 ||Numeric          ||  S  || Ordenamiento
+|}
+
+= Grupo Plan Estudios =
+Es utilizado para agrupar los periodos del plan de Estudio. Por ejemplo: se desea agrupar los periodos 1er y 2do Semestres en un grupo llamado "Primer Año" o se desea agrupar los periodos 1er, 2do, 3er, 4to, 5to y 6to Semestre en un grupo llamado "Ciclo Basico".
+
+{|
+!Atributo                !!Tipo          !! Req !! Comentario
+|-
+|id (PK)                 ||Numeric       ||  S  || Clave Primaria
+|-
+|plan_id (FK)            ||Nuemric       ||  N  || Relacion con Plan Estudio
+|-
+|codigo                  ||String(10)    ||  N  || Relacion con Plan Estudio
+|-
+|nombre                  ||String(255)   ||  N  || Nombre del Grupo del plan estudio.
+|}
+
+= Detalle Grupo Plan Estudios =
+Es utilizado para detallar la agrupacion de etapas del plan de estudio.
+
+{|
+!Atributo                !!Tipo          !! Req !! Comentario
+|-
+|id (PK)                 ||Numeric       ||  S  || Clave Primaria
+|-
+|division_plan_id (FK)   ||Nuemric       ||  N  || Relacion con Division Plan Estudios
+|-
+|etapa_plan_id           ||String(10)    ||  N  || Relacion con Plan Estudio
+|}
+
+= Asignatura Pensun Etapa Plan Estudio  =
+Detalle del plan de estudios
+
+{|
+!Atributo                     !!Tipo          !! Req !! Comentario
+|-
+|id (PK)                      ||Numeric       ||  S  || Clave Primaria
+|-
+|asignatura_pensun_id (FK)    ||Numeric       ||  N  || Relacion con Asignatura Pensun
+|-
+|etapa_plan_estudio_id (FK)   ||Numeric       ||  S  || Relacion con Etapa Plan Estudios
+|}
+
+= Periodo =
+Periodo academico.
+
+{|
+!Atributo                !!Tipo          !! Req !! Comentario
+|-
+|id (PK)                 ||Numeric       ||  S  || Clave Primaria
+|-
+|codigo                  ||String(10)    ||  N  || Codigo del Periodo
+|-
+|fecha_inicio            ||Date          ||  N  || Fecha que inicia el periodo
+|-
+|fecha_fin               ||Date          ||  N  || Fecha que finaliza el periodo
+|-
+|estatus_id (FK)         ||Numeric       ||  S  || Activo, Inactivo. Relacion con LOV('estatus')
+|}
+
+= Turno =
+Es utilizado para especificar los turnos que pueden tener las ofertas academicas. Por Ejemplo: Oferta del Primer Semestre
+
+{|
+!Atributo                !!Tipo          !! Req !! Comentario
+|-
+|id (PK)                 ||Numeric       ||  S  || Clave Primaria
+|-
+|codigo                  ||String(10)    ||  S  || Codigo del Turno
+|-
+|descripcion             ||String(60)    ||  S  || Descripcion del turno
+|}
+
+= Seccion =
+Es utilizado para dividir la cantidad de estudiantes de un pensun de una oferta academica. Los estudiantes de la Seccion A del pensun Informatica.
+
+{|
+!Atributo                !!Tipo          !! Req !! Comentario
+|-
+|id (PK)                 ||Numeric       ||  S  || Clave Primaria
+|-
+|codigo                  ||Numeric       ||  S  || Relacion con Periodo
+|}
+
+= Oferta Academica =
+Son los pensun de estudio que ofrece el Instituto en un determinado periodo.
+
+{|
+!Atributo                !!Tipo          !! Req !! Comentario
+|-
+|id (PK)                 ||Numeric       ||  S  || Clave Primaria
+|-
+|periodo                 ||Numeric       ||  S  || Relacion con Periodo
+|-
+|pensun_id (FK)          ||Numeric       ||  S  || Fecha que finaliza el periodo
+|-
+|estatus_id (FK)         ||Numeric       ||  N  || Activo, Inactivo. Relacion con LOV('estatus')
+|-
+|turno_id (FK)           ||Numeric       ||  N  || Relacion con Turno
+|}
+
+= Oferta Academica Seccion =
+Son las diviciones de una ofrata Academica. Por Ejemplo Seccion "A" de la Oferta Academica de Primer Grado.
+
+{|
+!Atributo                !!Tipo          !! Req !! Comentario
+|-
+|id (PK)                 ||Numeric       ||  S  || Clave Primaria
+|-
+|oferta_id (FK)          ||Numeric       ||  S  || Relacion con Oferta Academica
+|-
+|seccion_id (FK)         ||Numeric       ||  S  || Relacion con Seccion
+|}
+
+
+= Inscripcion =
+Inscripcion del Estudiante en la Institucion.
+
+{|
+!Atributo                !!Tipo          !! Req !! Comentario
+|-
+|id (PK)                 ||Numeric       ||  S  || Clave Primaria
+|-
+|persona_id (FK)         ||Numeric       ||  S  || Estudiante inscrito
+|-
+|carrea_id (FK)          ||Numeric       ||  S  || Relacion con carrera
+|-
+|fecha_ingreso           ||Date          ||  S  || Fecha de Ingreso a la Institucion
+|}
+
+= Inscripcion Turno =
+Detalla los turnos que puede tener un estudiante.
+
+{|
+!Atributo                !!Tipo          !! Req !! Comentario
+|-
+|id (PK)                 ||Numeric       ||  S  || Clave Primaria
+|-
+|inscripcion_id (FK)     ||Numeric       ||  S  || Relacion con Inscripcion
+|-
+|turno_id (FK)           ||Numeric       ||  S  || Relacion con Turno
+|-
+|periodo_id (FK)         ||Numeric       ||  S  || Relacion con Periodo
+|}
+
+= Asignatura Inscripcion Oferta =
+Las distintas Asignaturas que un estudiante tiene en una determinada oferta academica y una seccion. 
+
+{|
+!Atributo                    !!Tipo          !! Req !! Comentario
+|-
+|id (PK)                     ||Numeric       ||  S  || Clave Primaria
+|-
+|incsripcion_id (FK)         ||Numeric       ||  S  || Relacion con Inscripcion
+|-
+|oferta_seccion_id (FK)      ||Numeric       ||  S  || Relacion con Oferta
+|-
+|asignatura_pensun_id (FK)   ||Numeric       ||  S  || Relacion con Asignatura Pensun
+|}
+
+= Profesor Oferta =
+Define el profesor que dicta la Asignatura en una determinada oferta academica y una seccion. 
+
+{|
+!Atributo                    !!Tipo          !! Req !! Comentario
+|-
+|id (PK)                     ||Numeric       ||  S  || Clave Primaria
+|-
+|empleado_id (FK)            ||Numeric       ||  S  || Relacion con Inscripcion
+|-
+|oferta_seccion_id (FK)      ||Numeric       ||  S  || Relacion con Oferta
+|-
+|asignatura_pensun_id (FK)   ||Numeric       ||  S  || Relacion con Asignatura Pensun
+|}
+
+= Horario Asignatura Oferta =
+Define los horarios de una Asignatura en una determinada oferta academica y una seccion. 
+
+{| 
+!Atributo                    !!Tipo          !! Req !! Comentario
+|-
+|id (PK)                     ||Numeric       ||  S  || Clave Primaria
+|-
+|incsripcion_id (FK)         ||Numeric       ||  S  || Relacion con Inscripcion
+|-
+|oferta_seccion_id (FK)      ||Numeric       ||  S  || Relacion con Oferta
+|-
+|asignatura_pensun_id (FK)   ||Numeric       ||  S  || Relacion con Asignatura Pensun
+|-
+|dia                         ||Numeric       ||  S  || Relacion con LOV('dia')
+|-
+|horario                     ||Numeric       ||  S  || Relacion con LOV('horario')
+|}
+
+= Persona =
+Detalla los datos de la persona.
+
+= Direccion_Persona
+Detalla los datos de la direccion de la persona.
+
+= Estudiante =
+Detalla los datos del estudiante.
+
+= Representante =
+Detalla los datos del representante del estudiante.
+
+= Empleado =
+Detalla los datos del Empleado de la Institucion
+
+= Cargo =
+Detalla los cargos que tiene un Empleado de la Institucion
+
+
+____________________________________________________________________
+
+
+Otras Entidades Importantes
+
+= Aula Bundle=
+
+Dependencias:
+  - Core
+
+== Aula ==
+Ambiente apropiado para el aprendizaje de los estudiantes que la utilizan.
+
+{|
+!Atributo               !!Tipo             !! Req !! Comentario
+|-
+|id (PK)                ||Numeric          ||  S  || Clave Primaria
+|-
+|codigo                 ||String(10)       ||  S  || Codigo que identifica al Aula si aplica
+|-
+|nombre                 ||String(255)      ||  N  || Nombre del Aula si aplica.
+|-
+|ubicacion              ||String(35)       ||  N  || Ubicacion del Aula en el Instituto
+|-
+|tipo(FK)               ||Numeric(35)      ||  S  || (Aula, Laboratorio, Biblioteca)
+|-
+|capacidad              ||Numeric          ||  N  || Capacidad de alumnos posee el aula.
+|-
+|medidas                ||String(20)       ||  S  || Medida en metros del Aula ejemplo 20x20
+|-
+|observacion            ||String(255)      ||  S  || Observacion sobre el aula.
+|}
+
+
+= Calendario Bundle =
+
+Dependencias:
+  - Core
+  - Aula
+
+== Calendario ==
+Calendarios para fijar eventos de la institucion.
